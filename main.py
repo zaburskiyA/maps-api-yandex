@@ -5,6 +5,7 @@ import requests
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMainWindow
 from mapsUI import MapsMainWindow
+from request_by_coords import request
 
 class Main(QMainWindow, MapsMainWindow):
     def __init__(self):
@@ -13,8 +14,10 @@ class Main(QMainWindow, MapsMainWindow):
         self.pushButton.clicked.connect(self.show_map)
 
     def show_map(self):
-        ll = ",".join([self.lineEdit.text(), self.lineEdit_2.text()])
-        self.pixmap = QPixmap('map.png')
+        map_file = request([self.lineEdit.text(), self.lineEdit_2.text()])
+        print(map_file)
+        self.pixmap = QPixmap(map_file)
+        print(self.pixmap)
         self.label_4.setPixmap(self.pixmap)
 
 
