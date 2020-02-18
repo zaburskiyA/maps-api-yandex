@@ -1,9 +1,7 @@
 import requests
 
 
-def request(coords):
-    size = 0.5
-    print(coords)
+def request(coords, size):
     map_request = \
         "http://static-maps.yandex.ru/1.x/?ll={},{}&spn={},{}&l=map".format(coords[0], coords[1],
                                                                             size, size)
