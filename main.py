@@ -5,11 +5,11 @@ import requests
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMainWindow
 from PyQt5.QtCore import Qt
-from mapsUI import MapsMainWindow
-from request_by_coords import request
+from mapsUI import SearchWindow
+from request_by_coords import request, get_coord
 
 
-class Main(QMainWindow, MapsMainWindow):
+class Main(QMainWindow, SearchWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -36,20 +36,20 @@ class Main(QMainWindow, MapsMainWindow):
             self.size *= 0.91
             self.show_map()
         elif event.key() == Qt.Key_Up:
-            self.lineEdit.setText(
-                str((float(self.lineEdit.text()) + self.size + 90) % 180 - 90))
+            l1, l2 = self.coords
+            self.coords = (float(l1), (float(l2) + self.size + 90) % 180 - 90)
             self.show_map()
         elif event.key() == Qt.Key_Down:
-            self.lineEdit.setText(
-                str((float(self.lineEdit.text()) - self.size + 90) % 180 - 90))
+            l1, l2 = self.coords
+            self.coords = (float(l1), (float(l2) - self.size + 90) % 180 - 90)
             self.show_map()
         elif event.key() == Qt.Key_Right:
-            self.lineEdit_2.setText(str(
-                (float(self.lineEdit_2.text()) + self.size + 180) % 360 - 180))
+            l1, l2 = self.coords
+            self.coords = ((float(l1) + self.size + 180) % 360 - 180, float(l2))
             self.show_map()
         elif event.key() == Qt.Key_Left:
-            self.lineEdit_2.setText(str(
-                (float(self.lineEdit_2.text()) - self.size + 180) % 360 - 180))
+            l1, l2 = self.coords
+            self.coords = ((float(l1) - self.size + 180) % 360 - 180, float(l2))
             self.show_map()
 
 
