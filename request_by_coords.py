@@ -12,6 +12,7 @@ def request(coords, size):
         file.write(response.content)
     return map_file
 
+
 def get_coord(text):
     """Получает координаты по адресу объекта
     text - адресс
