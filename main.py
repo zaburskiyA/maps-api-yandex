@@ -15,8 +15,12 @@ class Main(QMainWindow, MapsMainWindow):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.show_map)
         self.pushButton_2.clicked.connect(self.show_map)
+        #self.map.clicked.connect(self.change_l)
+        #self.sat.clicked.connect(self.change_l)
+        #self.gibrid.clicked.connect(self.change_l)
         self.size = 0.5
         self.coords = (0, 0)
+        self.l = "map"
 
     def show_map(self):
         sender = self.sender()
@@ -24,7 +28,7 @@ class Main(QMainWindow, MapsMainWindow):
             self.coords = (self.lineEdit_2.text(), self.lineEdit.text())
         elif sender is not None and sender.text() == 'Поиск по адресу':
             self.coords = get_coord(self.lineEdit_3.text())
-        map_file = request(self.coords, self.size)
+        map_file = request(self.coords, self.size, self.l)
         self.pixmap = QPixmap(map_file)
         self.label_4.setPixmap(self.pixmap)
 
@@ -35,6 +39,17 @@ class Main(QMainWindow, MapsMainWindow):
         if event.key() == Qt.Key_PageUp:
             self.size *= 0.91
             self.show_map()
+
+    def change_l(self):
+        sender = self.sender().text()
+        if sender == "схема":
+            self.l = "map"
+        elif sender == "спутник":
+            self.l = "sat"
+        elif sender == "гибрид":
+            self.l = "sat,skl"
+        self.show_map()
+
 
 
 if __name__ == '__main__':
