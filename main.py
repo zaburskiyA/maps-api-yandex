@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMainWindow
 from mapsUI import MapsMainWindow
 from request_by_coords import request
 
+
 class Main(QMainWindow, MapsMainWindow):
     def __init__(self):
         super().__init__()
@@ -14,13 +15,10 @@ class Main(QMainWindow, MapsMainWindow):
         self.pushButton.clicked.connect(self.show_map)
 
     def show_map(self):
-        map_file = request([self.lineEdit.text(), self.lineEdit_2.text()])
-        print(map_file)
+        size = 0.5
+        map_file = request([self.lineEdit.text(), self.lineEdit_2.text()], size)
         self.pixmap = QPixmap(map_file)
-        print(self.pixmap)
         self.label_4.setPixmap(self.pixmap)
-
-
 
 
 if __name__ == '__main__':
