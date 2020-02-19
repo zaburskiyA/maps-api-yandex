@@ -14,16 +14,19 @@ class Main(QMainWindow, MapsMainWindow):
         super().__init__()
         self.setupUi(self)
         self.pushButton.clicked.connect(self.show_map)
+        self.pushButton_2.clicked.connect(self.show_map)
         self.size = 0.5
-        self.searching = True
-
+        self.coords = (0, 0)
 
     def show_map(self):
-        map_file = request([self.lineEdit_2.text(), self.lineEdit.text()],
-                           self.size)
+        sender = self.sender()
+        if sender is not None and sender.text() == 'Найти':
+            self.coords = (self.lineEdit_2.text(), self.lineEdit.text())
+        elif sender is not None and sender.text() == 'Поиск по адресу':
+            self.coords = get_coord(self.lineEdit_3.text())
+        map_file = request(self.coords, self.size)
         self.pixmap = QPixmap(map_file)
         self.label_4.setPixmap(self.pixmap)
-        print(self.size)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_PageDown and self.size <= 90 / 1.1:
