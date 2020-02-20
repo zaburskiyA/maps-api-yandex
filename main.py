@@ -5,7 +5,7 @@ import requests
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMainWindow
 from PyQt5.QtCore import Qt
-from mapsUI import SearchWindow
+from mapsUI import SearchWindow, MapWindow
 from request_by_coords import request, get_coord
 
 
@@ -15,18 +15,34 @@ class Main(QMainWindow, SearchWindow):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.show_map)
         self.pushButton_2.clicked.connect(self.show_map)
+        self.maps = []
+
+    def show_map(self):
+        sender = self.sender()
+        map = Map()
+        self.maps.append(map)
+        if sender is not None and sender.text() == 'Найти':
+            map.coords = (self.lineEdit_2.text(), self.lineEdit.text())
+        elif sender is not None and sender.text() == 'Поиск по адресу':
+            map.coords = get_coord(self.lineEdit_3.text())
+        map.show_map()
+        map.show()
+
+
+
+class Map(QMainWindow, MapWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
         self.size = 0.5
         self.coords = (0, 0)
 
     def show_map(self):
-        sender = self.sender()
-        if sender is not None and sender.text() == 'Найти':
-            self.coords = (self.lineEdit_2.text(), self.lineEdit.text())
-        elif sender is not None and sender.text() == 'Поиск по адресу':
-            self.coords = get_coord(self.lineEdit_3.text())
         map_file = request(self.coords, self.size)
         self.pixmap = QPixmap(map_file)
-        self.label_4.setPixmap(self.pixmap)
+        self.label.setPixmap(self.pixmap)
+        self.update()
+        print(map_file)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_PageDown and self.size <= 90 / 1.1:
@@ -51,6 +67,7 @@ class Main(QMainWindow, SearchWindow):
             l1, l2 = self.coords
             self.coords = ((float(l1) - self.size + 180) % 360 - 180, float(l2))
             self.show_map()
+
 
 
 if __name__ == '__main__':
