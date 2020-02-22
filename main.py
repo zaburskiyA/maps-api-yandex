@@ -15,9 +15,9 @@ class Main(QMainWindow, MapsMainWindow):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.show_map)
         self.pushButton_2.clicked.connect(self.show_map)
-        #self.map.clicked.connect(self.change_l)
-        #self.sat.clicked.connect(self.change_l)
-        #self.gibrid.clicked.connect(self.change_l)
+        # self.map.clicked.connect(self.change_l)
+        # self.sat.clicked.connect(self.change_l)
+        # self.gibrid.clicked.connect(self.change_l)
         self.size = 0.5
         self.coords = (0, 0)
         self.l = "map"
@@ -49,7 +49,6 @@ class Main(QMainWindow, MapsMainWindow):
         elif sender == "гибрид":
             self.l = "sat,skl"
         self.show_map()
-
 
 
 if __name__ == '__main__':
