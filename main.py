@@ -5,8 +5,7 @@ import requests
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QMainWindow
 from PyQt5.QtCore import Qt
-from mapsUI import SearchWindow
-from mapsUI2 import MapWindow
+from mapsUI import SearchWindow, MapWindow
 from request_by_coords import request, get_coord
 
 
@@ -17,18 +16,11 @@ class Main(QMainWindow, SearchWindow):
         self.pushButton.clicked.connect(self.show_map)
         self.pushButton_2.clicked.connect(self.show_map)
         self.maps = []
-        self.l = "map"
 
     def show_map(self):
         sender = self.sender()
         map = Map()
         self.maps.append(map)
-        if self.radioButton.isChecked():
-            self.l = "map"
-        elif self.radioButton_2.isChecked():
-            self.l = "sat"
-        elif self.radioButton_3.isChecked():
-            self.l = "sat,skl"
         if sender is not None and sender.text() == 'Найти':
             map.coords = (self.lineEdit_2.text(), self.lineEdit.text())
         elif sender is not None and sender.text() == 'Поиск по адресу':
