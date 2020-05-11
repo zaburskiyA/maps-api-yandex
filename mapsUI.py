@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class SearchWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 167)
+        MainWindow.resize(800, 170)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -56,6 +56,24 @@ class SearchWindow(object):
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(10, 11, 201, 41))
+        self.radioButton = QtWidgets.QRadioButton(self.centralwidget)
+        self.radioButton.setGeometry(QtCore.QRect(60, 120, 119, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.radioButton.setFont(font)
+        self.radioButton.setObjectName("radioButton")
+        self.radioButton_2 = QtWidgets.QRadioButton(self.centralwidget)
+        self.radioButton_2.setGeometry(QtCore.QRect(320, 120, 141, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.radioButton_2.setFont(font)
+        self.radioButton_2.setObjectName("radioButton_2")
+        self.radioButton_3 = QtWidgets.QRadioButton(self.centralwidget)
+        self.radioButton_3.setGeometry(QtCore.QRect(600, 120, 119, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.radioButton_3.setFont(font)
+        self.radioButton_3.setObjectName("radioButton_3")
         font = QtGui.QFont()
         font.setPointSize(14)
         self.pushButton_2.setFont(font)
@@ -80,6 +98,10 @@ class SearchWindow(object):
         self.label_3.setText(_translate("MainWindow", "Долгота"))
         self.pushButton.setText(_translate("MainWindow", "Найти"))
         self.pushButton_2.setText(_translate("MainWindow", "Поиск по адресу"))
+        self.radioButton.setText(_translate("MainWindow", "схема"))
+        self.radioButton_2.setText(_translate("MainWindow", "спутник"))
+        self.radioButton_3.setText(_translate("MainWindow", "гибрид"))
+
 
 class MapWindow(object):
     def setupUi(self, MainWindow):

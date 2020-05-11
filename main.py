@@ -15,11 +15,16 @@ class Main(QMainWindow, SearchWindow):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.show_map)
         self.pushButton_2.clicked.connect(self.show_map)
+        self.radioButton.clicked.connect(self.change_map_type)
+        self.radioButton_2.clicked.connect(self.change_map_type)
+        self.radioButton_3.clicked.connect(self.change_map_type)
         self.maps = []
+        self.map_types = {'схема': 'map', 'спутник': 'sat', 'гибрид': 'sat,skl'}
 
     def show_map(self):
         sender = self.sender()
         map = Map()
+        map.map_type = self.map_type
         self.maps.append(map)
         if sender is not None and sender.text() == 'Найти':
             map.coords = (self.lineEdit_2.text(), self.lineEdit.text())
@@ -28,6 +33,10 @@ class Main(QMainWindow, SearchWindow):
         map.show_map()
         map.show()
 
+    def change_map_type(self):
+        text = self.sender().text()
+        self.map_type = self.map_types[text]
+        print(self.map_type)
 
 
 class Map(QMainWindow, MapWindow):
@@ -36,13 +45,13 @@ class Map(QMainWindow, MapWindow):
         self.setupUi(self)
         self.size = 0.5
         self.coords = (0, 0)
+        self.map_type = 'map'
 
     def show_map(self):
-        map_file = request(self.coords, self.size)
+        map_file = request(self.coords, self.size, self.map_type)
         self.pixmap = QPixmap(map_file)
         self.label.setPixmap(self.pixmap)
         self.update()
-        print(map_file)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_PageDown and self.size <= 90 / 1.1:
@@ -67,7 +76,6 @@ class Map(QMainWindow, MapWindow):
             l1, l2 = self.coords
             self.coords = ((float(l1) - self.size + 180) % 360 - 180, float(l2))
             self.show_map()
-
 
 
 if __name__ == '__main__':
