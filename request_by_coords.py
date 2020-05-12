@@ -1,10 +1,16 @@
 import requests
 
 
-def request(coords, size, map_type):
-    map_request = \
-        "http://static-maps.yandex.ru/1.x/?ll={},{}&spn={},{}&l={}".format(coords[0], coords[1],
-                                                                            size, size, map_type)
+def request(coords, size, map_type, typee=False):
+    text_coords = ','.join(([str(i) for i in coords]))
+    if typee:
+        map_request = \
+            "http://static-maps.yandex.ru/1.x/?ll={},{}&spn={},{}&l={}&pt={},round".format(coords[0], coords[1],
+                                                                                            size, size,map_type, text_coords)
+    else:
+        map_request = \
+            "http://static-maps.yandex.ru/1.x/?ll={},{}&spn={},{}&l={}".format(coords[0], coords[1],
+                                                                                size, size, map_type)
     response = requests.get(map_request)
     if map_type == 'map':
         map_file = "map.png"

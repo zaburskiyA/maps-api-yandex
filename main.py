@@ -46,12 +46,14 @@ class Map(QMainWindow, MapWindow):
         self.size = 0.5
         self.coords = (0, 0)
         self.map_type = 'map'
+        self.first = True
 
     def show_map(self):
         map_file = request(self.coords, self.size, self.map_type)
         self.pixmap = QPixmap(map_file)
         self.label.setPixmap(self.pixmap)
         self.update()
+        print(map_file)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_PageDown and self.size <= 90 / 1.1:
@@ -63,19 +65,24 @@ class Map(QMainWindow, MapWindow):
         elif event.key() == Qt.Key_Up:
             l1, l2 = self.coords
             self.coords = (float(l1), (float(l2) + self.size + 90) % 180 - 90)
+            self.first = False
             self.show_map()
         elif event.key() == Qt.Key_Down:
             l1, l2 = self.coords
             self.coords = (float(l1), (float(l2) - self.size + 90) % 180 - 90)
+            self.first = False
             self.show_map()
         elif event.key() == Qt.Key_Right:
             l1, l2 = self.coords
             self.coords = ((float(l1) + self.size + 180) % 360 - 180, float(l2))
+            self.first = False
             self.show_map()
         elif event.key() == Qt.Key_Left:
             l1, l2 = self.coords
             self.coords = ((float(l1) - self.size + 180) % 360 - 180, float(l2))
+            self.first = False
             self.show_map()
+
 
 
 if __name__ == '__main__':
