@@ -24,7 +24,7 @@ class Main(QMainWindow, SearchWindow):
     def show_map(self):
         sender = self.sender()
         map = Map()
-        map.map_type = self.map_type
+        self.map_type = map.map_type
         self.maps.append(map)
         if sender is not None and sender.text() == 'Найти':
             map.coords = (self.lineEdit_2.text(), self.lineEdit.text())
@@ -49,7 +49,7 @@ class Map(QMainWindow, MapWindow):
         self.first = True
 
     def show_map(self):
-        map_file = request(self.coords, self.size, self.map_type)
+        map_file = request(self.coords, self.size, self.map_type, self.first)
         self.pixmap = QPixmap(map_file)
         self.label.setPixmap(self.pixmap)
         self.update()

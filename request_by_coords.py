@@ -1,7 +1,7 @@
 import requests
 
 
-def request(coords, size, map_type, typee=False):
+def request(coords, size, map_type='map', typee=False):
     text_coords = ','.join(([str(i) for i in coords]))
     if typee:
         map_request = \
